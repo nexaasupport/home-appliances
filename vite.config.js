@@ -2,8 +2,8 @@ import { defineConfig } from 'vite';
 import { resolve } from 'node:path';
 
 const pages = [
-  'index', 'products', 'product', 'offers', 'brands', 'services', 'contact',
-  'admin/login', 'admin/dashboard', 'admin/products', 'admin/stock', 'admin/reports',
+  'index', 'about', 'products', 'product', 'offers', 'brands', 'services', 'contact',
+  'admin/index', 'admin/login',
 ];
 
 export default defineConfig({

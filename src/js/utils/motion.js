@@ -75,3 +75,21 @@ export function toast(message) {
   host.append(el);
   setTimeout(() => { el.classList.add('is-out'); setTimeout(() => el.remove(), 250); }, 3500);
 }
+
+/** Fade images in as they finish loading (only images that are still loading are touched). */
+export function initImages() {
+  const arm = (img) => {
+    if (img.complete || img.dataset.fade) return;
+    img.dataset.fade = '1';
+    img.classList.add('is-loading');
+    const done = () => img.classList.remove('is-loading');
+    img.addEventListener('load', done, { once: true });
+    img.addEventListener('error', done, { once: true });
+  };
+  const scan = (root) => root.querySelectorAll('img').forEach(arm);
+  scan(document);
+  new MutationObserver((records) => records.forEach((r) => r.addedNodes.forEach((n) => {
+    if (n.nodeType !== 1) return;
+    if (n.tagName === 'IMG') arm(n); else scan(n);
+  }))).observe(document.body, { childList: true, subtree: true });
+}

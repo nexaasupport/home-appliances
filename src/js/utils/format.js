@@ -11,9 +11,11 @@ export const photo = (key, w = 600, h) => {
 };
 
 /** <img> with photo, or an SVG glyph tile when no photo exists for that item. */
-export const media = ({ photoKey, iconName, alt, w = 600, h, cls = '', eager = false }) =>
-  photoKey
-    ? `<img class="${cls}" src="${photo(photoKey, w, h)}" srcset="${photo(photoKey, Math.round(w / 2), h && Math.round(h / 2))} ${Math.round(w / 2)}w, ${photo(photoKey, w, h)} ${w}w" sizes="(max-width: 640px) 50vw, ${Math.round(w / 2)}px" width="${w}" height="${h || Math.round(w * 0.75)}" alt="${alt}" ${eager ? '' : 'loading="lazy" decoding="async"'}>`
+export const media = ({ photoKey, image, iconName, alt, w = 600, h, cls = '', eager = false }) =>
+  image
+    ? `<img class="${cls}" src="${image}" width="${w}" height="${h || Math.round(w * 0.75)}" alt="${alt}" ${eager ? '' : 'loading="lazy" decoding="async"'}>`
+    : photoKey
+    ? `<img class="${cls}" src="${photo(photoKey, w, h)}" srcset="${photo(photoKey, w, h)} ${w}w, ${photo(photoKey, w * 2, h && h * 2)} ${w * 2}w" sizes="(max-width: 479px) 100vw, (max-width: 899px) 50vw, ${Math.round(w / 2)}px" width="${w}" height="${h || Math.round(w * 0.75)}" alt="${alt}" ${eager ? '' : 'loading="lazy" decoding="async"'}>`
     : `<span class="glyph ${cls}" role="img" aria-label="${alt}">${icon(iconName, { size: 56 })}</span>`;
 
 export const waLink = (text) =>

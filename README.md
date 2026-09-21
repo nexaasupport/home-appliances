@@ -11,13 +11,14 @@ npm run preview
 
 ## What's in it
 - **Public site**: Home, Products (search, category/brand filters, sort, URL-shareable), Product detail (gallery, tabs, WhatsApp/Call enquiry), Offers, Brands, Services, Contact (validated form that opens WhatsApp).
-- **Admin** (`/admin/login.html`): Dashboard, Products (add/edit/delete), Stock in/out with low-stock alerts, Reports (date range, KPIs, animated SVG chart with a data-table alternative).
+- **Admin** (`/admin/login.html`): a single-page admin (hash routes) covering the whole shop flow. Website enquiries and contact-form messages land in **Enquiries**, convert into **Orders** (quote, confirmed, delivered, completed) with printable invoices (`NX-YYYY-####`), and feed **Customers** (merged by phone), **Service requests**, **Inventory** (stock ledger, suppliers, purchases), **Products** (photo upload, specs, hide from website), **Reports** (CSV export), **Settings** (store profile, invoices, users, backup) and an **Activity log**. Ctrl/Cmd + K opens global search.
 - **Motion**: staggered hero, scroll reveals, parallax, count-ups, hover lifts, sticky header, drawer, cross-page View Transitions. Everything respects `prefers-reduced-motion`.
 
 ## Admin demo login
-`admin@homeappliances.in` / `admin123`
+Owner: `admin@nexaa.in` / `admin123`  
+Staff: `staff@nexaa.in` / `staff123` (no reports, settings, activity log, deletes or profit figures). Five wrong sign-ins lock the form for 60 seconds.
 
-This is a front-end prototype. The login is a `sessionStorage` flag and all data lives in `localStorage` (`ha.db.v1`), so it is per-browser and **not secure**. Replace `src/js/store.js` and the gate in `src/js/admin/app.js` with a real API and server-side session before production.
+This is a front-end prototype. All data lives in `localStorage` (`ha.db.v3`), so it is per-browser, and sign-in is demo-grade (salted SHA-256 checked in the browser), so it is **not secure**. The public site and admin share the same browser storage, which is what lets a website enquiry appear in the admin during a demo. Export a backup from Settings before clearing browser data. For production, replace `src/js/store.js` and `src/js/admin/auth.js` with a real API and server-side sessions.
 
 ## Structure
 ```
@@ -25,7 +26,7 @@ This is a front-end prototype. The login is a `sessionStorage` flag and all data
 src/data/catalog.js       site info, categories, seed products, offers, photo ids
 src/js/store.js           shared data layer (products, purchases, sales)
 src/js/pages/*            public page renderers
-src/js/admin/app.js       admin screens
+src/js/admin/             app.js (router), shell.js, ui.js (kit), auth.js, login.js, views/*
 src/scss/                 tokens -> base -> components -> pages
 docs/                     reference mockups
 ```

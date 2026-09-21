@@ -1,0 +1,22 @@
+{
+ "hero": "#f4f1f0",
+ "cat/refrigerators": "#fcfbf3",
+ "cat/washing-machines": "#f1f5fa",
+ "cat/air-conditioners": "#f3f6fa",
+ "cat/televisions": "#f4f8fb",
+ "cat/kitchen-appliances": "#fdf5f3",
+ "cat/small-appliances": "#f3eefd",
+ "cat/air-coolers": "#f3f7fd",
+ "cat/fans": "#f3f6fb",
+ "cat/water-heaters": "#f6f4f1",
+ "offer/festival": "#062443",
+ "offer/exchange": "#e6f4ea",
+ "offer/bank": "#ffe0e3",
+ "prod/fridge": "#fefefd",
+ "prod/washer": "#fefefe",
+ "prod/tv": "#fefdfd",
+ "prod/ac": "#fefefd",
+ "prod/mixer": "#fefefe",
+ "prod/cooler": "#fefefd",
+ "why": "#d2d0cd"
+}

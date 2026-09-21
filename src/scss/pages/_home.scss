@@ -1,0 +1,109 @@
+@use '../abstracts/tokens' as *;
+
+// ---------- Hero: the mockup's room scene, with live text over the wall ----------
+.hero {
+  --h: clamp(300px, 23vw, 440px);
+  position: relative; overflow: hidden; isolation: isolate; background: var(--wall, #f4f1f0);
+  @include up($bp-md) { min-height: var(--h); display: flex; align-items: center; }
+  &__scene { position: relative; width: 100%; aspect-ratio: 624 / 233; order: 2;
+    img { width: 100%; height: 100%; object-fit: cover; @include motion { animation: scene-in 1.2s var(--ease-out) both; } }
+    @include up($bp-md) { position: absolute; z-index: -1; right: 0; top: 0; width: auto; height: 100%;
+      img { mask-image: linear-gradient(90deg, transparent 0, #000 16%); -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16%); } } }
+  &__inner { width: min(100% - var(--gutter) * 2, var(--container)); }
+  &__copy { display: grid; gap: 14px; justify-items: start; padding-block: 32px 8px; max-width: 470px;
+    @include up($bp-md) { padding-block: 40px; }
+    h1 { font-size: clamp(1.9rem, 2.5vw, 2.6rem); line-height: 1.14; }
+    p { color: var(--ink-2); font-size: 0.9375rem; max-width: 44ch; }
+    .chip { color: var(--ink-2); font-weight: 500; .icon { color: var(--navy-900); } } }
+  &__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; .btn { min-height: 48px; padding: 0 24px; } }
+  [data-hero] { @include motion { animation: rise 0.8s var(--ease-out) both; animation-delay: calc(var(--d, 0) * 110ms + 80ms); } }
+  // Covers the badge baked into the image so its text stays crisp and animatable
+  &__badge { position: absolute; left: 73.2%; top: 8.2%; width: 14.6%; aspect-ratio: 1; border-radius: 50%; display: grid; place-content: center; text-align: center; background: #0d2c5a; color: #fff; box-shadow: var(--shadow-md);
+    small { font-size: clamp(0.5rem, 0.72vw, 0.7rem); opacity: 0.9; line-height: 1.25; } strong { font: 700 clamp(1.1rem, 2.4vw, 2.1rem)/1.05 var(--font-head); }
+    @include motion { animation: pop 0.7s var(--ease-out) 0.8s both, float 5s ease-in-out 1.5s infinite; } }
+}
+@keyframes scene-in { from { opacity: 0; transform: scale(1.05); } }
+
+// ---------- Categories ----------
+.cats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; @media (min-width: 400px) { grid-template-columns: repeat(3, minmax(0, 1fr)); } @include up($bp-md) { grid-template-columns: repeat(5, minmax(0, 1fr)); } @include up($bp-lg) { grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 10px; } }
+.cat {
+  position: relative; display: grid; grid-template-rows: 1fr auto; padding: 10px 10px 10px; min-height: 148px; border-radius: 12px; background: var(--tint, var(--tint-cream)); border: 1px solid rgb(11 42 85 / 5%);
+  transition: transform var(--t-base) var(--ease-out), box-shadow var(--t-base) var(--ease-out), opacity var(--t-slow) var(--ease-out);
+  img { width: 100%; height: 96px; object-fit: contain; mix-blend-mode: multiply; transition: transform var(--t-base) var(--ease-out); }
+  @include hover { transform: translateY(-6px); box-shadow: var(--shadow-md); img { transform: scale(1.08); } .cat__arrow { transform: translateX(3px); } }
+  &__name { align-self: end; font-size: 0.75rem; font-weight: 600; line-height: 1.25; color: var(--ink); padding-right: 22px; }
+  &__arrow { position: absolute; right: 10px; bottom: 10px; color: var(--navy-900); transition: transform var(--t-base) var(--ease-out); }
+}
+
+// ---------- Brands (logos sliced from the mockup) ----------
+.brands { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; @include up($bp-sm) { grid-template-columns: repeat(5, minmax(0, 1fr)); } @include up($bp-lg) { grid-template-columns: repeat(10, minmax(0, 1fr)); } }
+.brand {
+  display: grid; place-items: center; height: 70px; padding: 8px 10px; border-radius: 10px; background: #fff; border: 1px solid var(--line);
+  transition: transform var(--t-base) var(--ease-out), box-shadow var(--t-base), opacity var(--t-slow) var(--ease-out);
+  img { width: 100%; height: 100%; object-fit: contain; }
+  @include hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+}
+
+// ---------- Offers ----------
+.offers { display: grid; gap: 14px; @include up($bp-md) { grid-template-columns: 1.1fr 1fr 1fr; } }
+.offer {
+  position: relative; overflow: hidden; min-height: 170px; padding: 22px; border-radius: 12px; background: var(--bg);
+  transition: transform var(--t-base) var(--ease-out), box-shadow var(--t-base), opacity var(--t-slow) var(--ease-out);
+  @include hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); .offer__art { transform: scale(1.05); } }
+  &__copy { position: relative; z-index: 1; display: grid; gap: 10px; justify-items: start; max-width: 52%; h3 { font-size: 1.125rem; line-height: 1.2; } p { font-size: 0.8125rem; color: var(--ink-2); line-height: 1.45; } }
+  &__art { position: absolute; right: 0; bottom: 0; height: 100%; width: auto; max-width: 62%; object-fit: cover; object-position: left center; transform-origin: right center; transition: transform var(--t-slow) var(--ease-out);
+    mask-image: linear-gradient(90deg, transparent 0, #000 22%); -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 22%); }
+  &__btn { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 16px; margin-top: 6px; border: 1.5px solid var(--navy-900); border-radius: 10px; background: transparent; font-size: 0.8125rem; font-weight: 600; color: var(--navy-900); transition: background-color var(--t-fast), color var(--t-fast); @include hover { background: var(--navy-900); color: #fff; } }
+  &--festival { color: #fff; h3 { color: #fff; } p { color: rgb(255 255 255 / 80%); } .offer__btn { border-color: rgb(255 255 255 / 70%); color: #fff; @include hover { background: #fff; color: var(--navy-900); } } }
+  &--exchange h3 { color: #0b3d2a; }
+  &--bank h3 { color: #a01c34; } &--bank .offer__btn { border-color: #d33b57; color: #a01c34; @include hover { background: #a01c34; color: #fff; } }
+}
+
+// ---------- Popular products ----------
+.pcard--cut { border-radius: 14px; box-shadow: var(--shadow-sm);
+  .pcard__media { aspect-ratio: auto; height: 220px; background: #fff; padding: 20px 24px 0; border-bottom: 1px solid var(--line); }
+  .pcard__cut { width: 100%; height: 100%; object-fit: contain; }
+  .pcard__body { padding: 16px 18px 18px; gap: 6px; }
+  .pcard__title { font-size: 0.9375rem; }
+  .pcard__brand { font-size: 0.8125rem; }
+  .pcard__price { font-size: 1.125rem; } }
+// Home "Popular Products": compact cards (6 across on desktop, like the mockup)
+.pgrid--compact { gap: 14px; @include up($bp-lg) { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
+  .pcard--cut { border-radius: 10px; box-shadow: none;
+    .pcard__media { height: 140px; padding: 12px 12px 0; }
+    .pcard__body { padding: 12px; gap: 3px; }
+    .pcard__title { font-size: 0.8125rem; min-height: 2.6em; }
+    .pcard__brand { font-size: 0.75rem; }
+    .pcard__price { font-size: 1rem; }
+    .btn { font-size: 0.75rem; padding: 0 8px; gap: 6px; } } }
+.link-detail { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8125rem; font-weight: 500; color: var(--navy-800); min-height: 32px; @include hover { text-decoration: underline; } .icon { color: var(--navy-800); } }
+
+// ---------- Why us ----------
+.why-band { background: #f3f6fb; padding-block: 40px; @include up($bp-md) { padding-block: 44px; } }
+.why { display: grid; gap: 24px; align-items: center; @include up($bp-md) { grid-template-columns: 340px 1fr; gap: 32px; }
+  &__media { border-radius: 8px; overflow: hidden; img { width: 100%; height: 100%; aspect-ratio: 2 / 1; object-fit: cover; } }
+  &__body { display: grid; gap: 4px; h2 { font-size: 1.125rem; } > p { color: var(--ink-2); font-size: 0.8125rem; margin-bottom: 12px; } }
+  &__grid { display: grid; gap: 10px; @include up($bp-sm) { grid-template-columns: repeat(2, minmax(0, 1fr)); } @include up($bp-lg) { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  &__item { display: flex; gap: 12px; align-items: center; padding: 14px; background: #fff; border: 1px solid var(--line); border-radius: 10px; transition: transform var(--t-base) var(--ease-out), box-shadow var(--t-base), opacity var(--t-slow) var(--ease-out); @include hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    strong { display: block; font-size: 0.8125rem; } span:not(.why__icon) { font-size: 0.75rem; color: var(--ink-3); line-height: 1.35; display: block; } }
+  &__icon { flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--navy-900); color: #fff; }
+}
+
+// ---------- Reviews ----------
+.reviews { display: grid; gap: 12px; @include up($bp-md) { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.review {
+  display: flex; gap: 14px; align-items: flex-start; padding: 16px; background: #fff; border: 1px solid var(--line); border-radius: 10px;
+  transition: transform var(--t-base) var(--ease-out), box-shadow var(--t-base), opacity var(--t-slow) var(--ease-out);
+  @include hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  &__avatar { flex: none; width: 46px; height: 46px; border-radius: 50%; object-fit: cover; }
+  blockquote { color: var(--ink-2); font-size: 0.8125rem; line-height: 1.55; }
+  figcaption { display: grid; gap: 1px; margin-top: 10px; font-size: 0.75rem; strong { color: var(--ink); font-size: 0.8125rem; } span:not(.stars) { color: var(--ink-3); } .stars { margin-top: 3px; } }
+}
+
+// ---------- Visit store ----------
+.visit { display: grid; overflow: hidden; border-radius: 10px; background: var(--navy-900); @include up($bp-md) { grid-template-columns: 1fr 1.15fr; }
+  &__info { display: grid; gap: 10px; align-content: center; justify-items: start; padding: 26px; color: #fff; h2 { color: #fff; font-size: 1.125rem; } p { color: rgb(255 255 255 / 80%); font-size: 0.8125rem; max-width: 40ch; }
+    ul { margin-block: 4px; } li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.8125rem; margin-block: 8px; .icon { margin-top: 1px; } a:hover { text-decoration: underline; } span, a { overflow-wrap: anywhere; } } }
+  &__map { display: block; overflow: hidden; min-height: 200px;
+ img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--t-slow) var(--ease-out); } @include hover { img { transform: scale(1.04); } } }
+}

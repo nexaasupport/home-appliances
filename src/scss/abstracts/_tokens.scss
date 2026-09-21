@@ -1,0 +1,55 @@
+// Design tokens. Components read CSS custom properties, never raw hex.
+$bp-sm: 640px;
+$bp-md: 900px;
+$bp-lg: 1200px;
+$bp-nav: 1024px;
+
+@mixin up($bp) { @media (min-width: $bp) { @content; } }
+@mixin down($bp) { @media (max-width: $bp - 1px) { @content; } }
+@mixin motion { @media (prefers-reduced-motion: no-preference) { @content; } }
+@mixin hover { @media (hover: hover) { &:hover { @content; } } }
+
+:root {
+  --navy-950: #061733;
+  --navy-900: #0b2a55;
+  --navy-800: #123a73;
+  --navy-100: #e6ecf6;
+  --green-700: #0f7a41;
+  --green-600: #138a4a;
+  --green-500: #1faa59;
+  --gold-500: #f5b301;
+
+  --ink: #0f1b30;
+  --ink-2: #4a5872;
+  --ink-3: #6b7793;
+  --line: #e4e9f2;
+  --bg: #ffffff;
+  --bg-soft: #f4f7fc;
+
+  --tint-cream: #fbf4ea;
+  --tint-sky: #e9f2fd;
+  --tint-mint: #e7f6ee;
+  --tint-lavender: #f0ecfb;
+  --tint-blush: #fdecef;
+
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --shadow-sm: 0 1px 2px rgb(11 42 85 / 6%), 0 1px 3px rgb(11 42 85 / 6%);
+  --shadow-md: 0 6px 16px rgb(11 42 85 / 8%), 0 2px 4px rgb(11 42 85 / 5%);
+  --shadow-lg: 0 22px 48px rgb(11 42 85 / 16%), 0 6px 12px rgb(11 42 85 / 8%);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast: 160ms;
+  --t-base: 260ms;
+  --t-slow: 520ms;
+
+  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-head: 'Poppins', 'Inter Variable', system-ui, sans-serif;
+
+  --container: 1200px;
+  --gutter: 16px;
+  --header-h: 72px;
+
+  @include up($bp-md) { --gutter: 32px; }
+}
